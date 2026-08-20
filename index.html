@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Word Pattern Lab</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080b12;
+      color: #e8eef7;
+    }
+
+    .container {
+      width: min(900px, 92%);
+      margin: 50px auto;
+    }
+
+    h1 {
+      color: #00ff9d;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #8c98aa;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #111722;
+      border: 1px solid #263142;
+      border-radius: 14px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      color: #b8c4d6;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid #344155;
+      background: #0b1019;
+      color: white;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #00ff9d;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    button {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .generate {
+      background: #00ff9d;
+      color: #06100b;
+    }
+
+    .download {
+      background: #2388ff;
+      color: white;
+    }
+
+    .clear {
+      background: #293342;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .warning {
+      background: #241b0b;
+      border: 1px solid #765519;
+      color: #eecb7a;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .output {
+      background: #05080d;
+      border: 1px solid #263142;
+      border-radius: 8px;
+      min-height: 300px;
+      padding: 15px;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+      color: #00ff9d;
+    }
+
+    .count {
+      margin-top: 10px;
+      color: #8794a8;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>⚡ Cybersecurity Word Pattern Lab</h1>
+
+    <p class="subtitle">
+      Educational simulator for understanding password-pattern combinations.
+    </p>
+
+    <div class="warning">
+      ⚠️ This tool generates synthetic patterns for cybersecurity
+      awareness and defensive training.
+    </div>
+
+    <div class="card">
+
+      <label for="topic">Training Topic</label>
+
+      <input
+        id="topic"
+        type="text"
+        placeholder="Example: BIKE"
+        maxlength="30"
+      >
+
+      <label for="year">Example Year</label>
+
+      <input
+        id="year"
+        type="number"
+        placeholder="2026"
+        min="1900"
+        max="2200"
+      >
+
+      <label for="pattern">Pattern Style</label>
+
+      <select id="pattern">
+
+        <option value="basic">
+          Basic combinations
+        </option>
+
+        <option value="suffix">
+          Suffix variations
+        </option>
+
+        <option value="separator">
+          Separator variations
+        </option>
+
+        <option value="case">
+          Case variations
+        </option>
+
+        <option value="all">
+          All educational patterns
+        </option>
+
+      </select>
+
+      <div class="buttons">
+
+        <button
+          class="generate"
+          onclick="generatePatterns()">
+          ⚡ Generate
+        </button>
+
+        <button
+          class="download"
+          onclick="downloadTXT()">
+          ⬇ Export .txt
+        </button>
+
+        <button
+          class="clear"
+          onclick="clearOutput()">
+          Clear
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h2>Generated Training Patterns</h2>
+
+      <div id="output" class="output">
+Click "Generate" to create training patterns...
+      </div>
+
+      <div id="count" class="count">
+        0 patterns
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    let generated = [];
+
+    function generatePatterns() {
+
+      const topicInput =
+        document.getElementById("topic").value.trim();
+
+      const year =
+        document.getElementById("year").value.trim();
+
+      const style =
+        document.getElementById("pattern").value;
+
+      if (!topicInput) {
+        alert("Enter a training topic.");
+        return;
+      }
+
+      const topic = topicInput.toUpperCase();
+
+      generated = [];
+
+      function add(value) {
+
+        if (
+          value &&
+          !generated.includes(value)
+        ) {
+          generated.push(value);
+        }
+
+      }
+
+      /* Basic patterns */
+
+      if (
+        style === "basic" ||
+        style === "all"
+      ) {
+
+        add(topic);
+
+        add(year || "YYYY");
+
+        add(
+          `${topic}_${year || "YYYY"}`
+        );
+
+      }
+
+      /* Suffix patterns */
+
+      if (
+        style === "suffix" ||
+        style === "all"
+      ) {
+
+        add(`${topic}_001`);
+
+        add(`${topic}_123`);
+
+        add(`${topic}_2026`);
+
+        add(`${topic}_TEST`);
+
+      }
+
+      /* Separator patterns */
+
+      if (
+        style === "separator" ||
+        style === "all"
+      ) {
+
+        add(`${topic}-TEST`);
+
+        add(`${topic}.TEST`);
+
+        add(`${topic}_TEST`);
+
+        add(`${topic}-001`);
+
+      }
+
+      /* Case patterns */
+
+      if (
+        style === "case" ||
+        style === "all"
+      ) {
+
+        add(topic.toLowerCase());
+
+        add(topic);
+
+        add(
+          topic.charAt(0) +
+          topic.slice(1).toLowerCase()
+        );
+
+      }
+
+      if (generated.length === 0) {
+        add("SAMPLE_001");
+      }
+
+      document.getElementById("output")
+        .textContent = generated.join("\n");
+
+      document.getElementById("count")
+        .textContent =
+        `${generated.length} training patterns`;
+    }
+
+
+    function downloadTXT() {
+
+      if (generated.length === 0) {
+
+        alert(
+          "Generate some patterns first."
+        );
+
+        return;
+      }
+
+      const content =
+        "# Cybersecurity Training Patterns\n\n" +
+        generated.join("\n");
+
+      const blob = new Blob(
+        [content],
+        {
+          type: "text/plain"
+        }
+      );
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const a =
+        document.createElement("a");
+
+      a.href = url;
+
+      a.download =
+        "training-patterns.txt";
+
+      document.body.appendChild(a);
+
+      a.click();
+
+      document.body.removeChild(a);
+
+      URL.revokeObjectURL(url);
+    }
+
+
+    function clearOutput() {
+
+      generated = [];
+
+      document.getElementById("output")
+        .textContent =
+        'Click "Generate" to create training patterns...';
+
+      document.getElementById("count")
+        .textContent =
+        "0 patterns";
+    }
+
+  </script>
+
+</body>
+</html>
